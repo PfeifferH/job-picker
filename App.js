@@ -1,7 +1,9 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
-import { AppLoading, Asset, Font, Icon } from 'expo';
+import { Asset, Font, Icon } from 'expo';
 import { HomeScreen } from './screens/HomeScreen';
+import "./constants/Colors"
+import Colors from './constants/Colors';
 
 export default class App extends React.Component {
   state = {
@@ -10,11 +12,13 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
+        <StatusBar barStyle="light-content" backgroundColor={Colors.tabIconDefault} />
         <HomeScreen />
       </View>
     );
   }
+
 
   _loadResourcesAsync = async () => {
     return Promise.all([
@@ -43,6 +47,6 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#4F6D7A',
   },
 });
