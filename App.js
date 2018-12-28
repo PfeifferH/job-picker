@@ -48,5 +48,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#4F6D7A',
+    paddingTop: Platform.OS == "ios" ? 0 : StatusBar.currentHeight,
   },
 });
