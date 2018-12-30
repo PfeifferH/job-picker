@@ -1,8 +1,7 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, ImageBackground } from 'react-native';
 import { Asset, Font, Icon } from 'expo';
 import { HomeScreen } from './screens/HomeScreen';
-import "./constants/Colors"
 import Colors from './constants/Colors';
 
 export default class App extends React.Component {
@@ -13,8 +12,10 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar barStyle="light-content" backgroundColor={Colors.tabIconDefault} />
-        <HomeScreen />
+        <ImageBackground style={styles.image} source={require('./assets/images/job-picker-background-main.png')}>
+          <StatusBar barStyle="light-content" backgroundColor={Colors.statusBarColor} />
+          <HomeScreen />   
+        </ImageBackground> 
       </View>
     );
   }
@@ -47,7 +48,14 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#4F6D7A',
+    backgroundColor: '#0091ca',
     paddingTop: Platform.OS == "ios" ? 0 : StatusBar.currentHeight,
+    fontFamily: 'Roboto'
   },
+  image: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'cover'
+  }
 });
