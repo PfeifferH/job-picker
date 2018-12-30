@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, ImageBackground } from 'react-native'
 import Colors from '../constants/Colors'
+
 export class HomeScreen extends Component {
 
   constructor(props) {
@@ -13,29 +14,37 @@ export class HomeScreen extends Component {
   
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Find a job</Text>
-        </View>
+      <ImageBackground style={styles.image} source={require('../assets/images/job-picker-background-main.png')}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Text style={styles.title}>Find a job</Text>
+          </View>
+        
+          <TextInput style={styles.input} placeholder='Keyword(s)' value={this.state.searchString} onChangeText={(e) => this.setState({ searchString: e })} />
       
-        <TextInput style={styles.input} placeholder='Keyword(s)' value={this.state.searchString} onChangeText={(e) => this.setState({ searchString: e })} />
-     
-        <TextInput style={styles.input} placeholder='Location' value={this.state.location} onChangeText={(e) => this.setState({ location: e})} />
+          <TextInput style={styles.input} placeholder='Location' value={this.state.location} onChangeText={(e) => this.setState({ location: e})} />
 
-        <View style={styles.button}>
-          <Button color={Colors.buttonColor} title="Filters"></Button>
+          <View style={styles.button}>
+            <Button color={Colors.buttonColor} title="Filters" onPress={() => this.props.navigation.navigate('Filters')}></Button>
+          </View>
+
+          <View style={styles.button}>
+            <Button color={Colors.buttonColor} title="Search"></Button>
+          </View>
+
         </View>
-
-        <View style={styles.button}>
-          <Button color={Colors.buttonColor} title="Search"></Button>
-        </View>
-
-      </View>
+      </ImageBackground>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  image: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'cover'
+  },
   container: {
     justifyContent: 'space-between',
     alignItems: 'stretch'
