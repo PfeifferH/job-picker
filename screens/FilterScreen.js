@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollView, View, Button, TextInput, StyleSheet, ImageBackground, Alert } from 'react-native'
+import { LocationDisplay } from '../components/LocationDisplay'
 import Colors from '../constants/Colors'
 
 export class FilterScreen extends Component {
@@ -61,7 +62,7 @@ export class FilterScreen extends Component {
           
           {this.state.locations.map((location) => {
             const index = this.state.locations.indexOf(location)
-            return <TextInput style={styles.input} key={index} value={location} onChangeText={(e) => this.updateLocationValue(0, e, index)} />
+            return <LocationDisplay style={styles.input} key={index} value={location} onChangeText={(e) => this.updateLocationValue(0, e, index)} />
           })}
 
           <View style={styles.button}>
