@@ -8,7 +8,8 @@ export class HomeScreen extends Component {
     super(props)
     this.state = this.props.navigation.state.params ? this.props.navigation.state.params : {
       searchString: '',
-      location: '',
+      locations: ['Worldwide'],
+      excludedLocations: [],
       salary: '',
       duration: '',
       start: ''
@@ -22,6 +23,12 @@ export class HomeScreen extends Component {
     }
   }
 
+  updateLocation(e) {
+    let locations = this.state.locations
+    locations[0] = e
+    this.setState({ locations: locations })
+  }
+
   render() {
     return (
       <ImageBackground style={styles.image} source={require('../assets/images/job-picker-background-main.png')}>
@@ -32,7 +39,7 @@ export class HomeScreen extends Component {
         
           <TextInput style={styles.input} placeholder='Keyword(s)' value={this.state.searchString} onChangeText={(e) => this.setState({ searchString: e })} />
       
-          <TextInput style={styles.input} placeholder='Location' value={this.state.location} onChangeText={(e) => this.setState({ location: e})} />
+          <TextInput style={styles.input} placeholder='Location' value={this.state.locations[0]} onChangeText={(e) => this.updateLocation(e)} />
 
           <View style={styles.button}>
             <Button color={Colors.buttonColor} title="Filters" onPress={() => this.props.navigation.navigate('Filters', this.state)}></Button>

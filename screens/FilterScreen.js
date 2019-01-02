@@ -8,10 +8,30 @@ export class FilterScreen extends Component {
     super(props)
 
     this.state = this.props.navigation.state.params
-    // console.log(this.state)
+  }
+
+  addLocation(type) {
+    let locations = type === 0 ? this.state.locations : this.state.excludedLocations
+    locations.push('')
+    if (type === 0) {
+      this.setState({ locations: locations })
+    } else {
+      this.setState({ excludedLocations: locations })
+    }
+  }
+
+  updateLocationValue(type, e, index) {
+    let locations = type === 0 ? this.state.locations : this.state.excludedLocations
+    locations[index] = e
+    if (type === 0) {
+      this.setState({ locations: locations })
+    } else {
+      this.setState({ excludedLocations: locations })
+    }
   }
 
   render() {
+    console.log(this.state)
     return (
       <ImageBackground style={styles.image} source={require('../assets/images/job-picker-background-filters.png')}>
         <View style={styles.container}>
@@ -26,7 +46,25 @@ export class FilterScreen extends Component {
           <TextInput style={styles.input} placeholder='Salary' value={this.state.salary} onChangeText={(e) => this.setState({ salary: e })} />
           <TextInput style={styles.input} placeholder='Duration' value={this.state.duration} onChangeText={(e) => this.setState({ duration: e })} />
           <TextInput style={styles.input} placeholder='Start Date' value={this.state.start} onChangeText={(e) => this.setState({ start: e })} />
+          
+          <View style={styles.button}>
+            <Button color={Colors.buttonColor} title="Add Location" onPress={() => this.addLocation(0)} />
+          </View>
+          
+          {this.state.locations.map((location) => {
+            const index = this.state.locations.indexOf(location)
+            return <TextInput style={styles.input} key={index} value={location} onChangeText={(e) => this.updateLocationValue(0, e, index)} />
+          })}
 
+          <View style={styles.button}>
+            <Button color={Colors.buttonColor} title="Exclude Location" onPress={() => this.addLocation(1)} />
+          </View>
+
+          {this.state.excludedLocations.map((location) => {
+            const index = this.state.excludedLocations.indexOf(location)
+            return <TextInput style={styles.input} key={index} value={location} onChangeText={(e) => this.updateLocationValue(1, e, index)} />
+          })}
+          
           <View style={styles.button}>
             <Button color={Colors.buttonColor} title="Apply Filters" onPress={() => this.props.navigation.navigate('Home', this.state)} />
           </View>
