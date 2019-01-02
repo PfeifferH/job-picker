@@ -29,6 +29,13 @@ export class HomeScreen extends Component {
     this.setState({ locations: locations })
   }
 
+  enterSearch() {
+    if (this.state.locations.length < 1 || this.state.locations.indexOf('') !== -1) {
+      Alert.alert('Error', 'Please select a valid location', [{text: 'OK'}])
+      return
+    }
+  }
+
   render() {
     return (
       <ImageBackground style={styles.image} source={require('../assets/images/job-picker-background-main.png')}>
@@ -46,7 +53,7 @@ export class HomeScreen extends Component {
           </View>
 
           <View style={styles.button}>
-            <Button color={Colors.buttonColor} title="Search" onPress={() => console.log("Pressed")}></Button>
+            <Button color={Colors.buttonColor} title="Search" onPress={() => this.enterSearch()}></Button>
           </View>
 
         </View>

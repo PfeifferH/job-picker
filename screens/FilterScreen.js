@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Button, TextInput, StyleSheet, ImageBackground } from 'react-native'
+import { ScrollView, View, Button, TextInput, StyleSheet, ImageBackground, Alert } from 'react-native'
 import Colors from '../constants/Colors'
 
 export class FilterScreen extends Component {
@@ -30,11 +30,19 @@ export class FilterScreen extends Component {
     }
   }
 
+  applyFilters() {
+    if (this.state.locations.length < 1 || this.state.locations.indexOf('') !== -1) {
+      Alert.alert('Filter Error', 'Please select a valid location', [{text: 'OK'}])
+      return
+    } else {
+      this.props.navigation.navigate('Home', this.state)
+    } 
+  }
+
   render() {
-    console.log(this.state)
     return (
       <ImageBackground style={styles.image} source={require('../assets/images/job-picker-background-filters.png')}>
-        <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.container}>
 
           {/* 
             Filter out locations
@@ -66,10 +74,10 @@ export class FilterScreen extends Component {
           })}
           
           <View style={styles.button}>
-            <Button color={Colors.buttonColor} title="Apply Filters" onPress={() => this.props.navigation.navigate('Home', this.state)} />
+            <Button color={Colors.buttonColor} title="Apply Filters" onPress={() => this.applyFilters()} />
           </View>
         
-        </View>
+        </ScrollView>
       </ImageBackground>
     )
   }
