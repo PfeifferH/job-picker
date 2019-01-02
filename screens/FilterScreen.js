@@ -7,11 +7,8 @@ export class FilterScreen extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      salary: '',
-      duration: '',
-      start: ''
-    }
+    this.state = this.props.navigation.state.params
+    // console.log(this.state)
   }
 
   render() {
@@ -26,12 +23,12 @@ export class FilterScreen extends Component {
             duration
           */}
 
-          <TextInput style={styles.input} placeholder='Salary' value={this.state.searchString} onChangeText={(e) => this.setState({ salary: e })} />
-          <TextInput style={styles.input} placeholder='Duration' value={this.state.searchString} onChangeText={(e) => this.setState({ duration: e })} />
-          <TextInput style={styles.input} placeholder='Start Date' value={this.state.searchString} onChangeText={(e) => this.setState({ start: e })} />
-            
+          <TextInput style={styles.input} placeholder='Salary' value={this.state.salary} onChangeText={(e) => this.setState({ salary: e })} />
+          <TextInput style={styles.input} placeholder='Duration' value={this.state.duration} onChangeText={(e) => this.setState({ duration: e })} />
+          <TextInput style={styles.input} placeholder='Start Date' value={this.state.start} onChangeText={(e) => this.setState({ start: e })} />
+
           <View style={styles.button}>
-            <Button color={Colors.buttonColor} title="Apply Filters" onPress={() => this.props.navigation.navigate('Home')} />
+            <Button color={Colors.buttonColor} title="Apply Filters" onPress={() => this.props.navigation.navigate('Home', this.state)} />
           </View>
         
         </View>
@@ -39,6 +36,8 @@ export class FilterScreen extends Component {
     )
   }
 }
+
+
 
 const styles = StyleSheet.create({
   image: {
