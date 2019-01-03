@@ -21,6 +21,16 @@ export class FilterScreen extends Component {
     }
   }
 
+  removeLocation(type, index) {
+    let locations = type === 0 ? this.state.locations : this.state.excludedLocations
+    locations.splice(index, 1)
+    if (type === 0) {
+      this.setState({ locations: locations })
+    } else {
+      this.setState({ excludedLocations: locations })
+    }
+  }
+
   updateLocationValue(type, e, index) {
     let locations = type === 0 ? this.state.locations : this.state.excludedLocations
     locations[index] = e
@@ -32,7 +42,7 @@ export class FilterScreen extends Component {
   }
 
   applyFilters() {
-    if (this.state.locations.length < 1 || this.state.locations.indexOf('') !== -1) {
+    if (this.state.locations.length < 1 || this.state.locations.indexOf('') !== -1 || this.state.excludedLocations.length < 1 || this.state.excludedLocations.indexOf('') !== -1) {
       Alert.alert('Filter Error', 'Please select a valid location', [{text: 'OK'}])
       return
     } else {
@@ -60,18 +70,16 @@ export class FilterScreen extends Component {
             <Button color={Colors.buttonColor} title="Add Location" onPress={() => this.addLocation(0)} />
           </View>
           
-          {this.state.locations.map((location) => {
-            const index = this.state.locations.indexOf(location)
-            return <LocationDisplay style={styles.input} key={index} value={location} onChangeText={(e) => this.updateLocationValue(0, e, index)} />
+          {this.state.locations.map((location, index) => {
+            return <LocationDisplay style={styles.input} key={index} value={location} onChangeText={(e) => this.updateLocationValue(0, e, index)} remove={() => this.removeLocation(0, index)} />
           })}
 
           <View style={styles.button}>
             <Button color={Colors.buttonColor} title="Exclude Location" onPress={() => this.addLocation(1)} />
           </View>
 
-          {this.state.excludedLocations.map((location) => {
-            const index = this.state.excludedLocations.indexOf(location)
-            return <TextInput style={styles.input} key={index} value={location} onChangeText={(e) => this.updateLocationValue(1, e, index)} />
+          {this.state.excludedLocations.map((location, index) => {
+            return <LocationDisplay style={styles.input} key={index} value={location} onChangeText={(e) => this.updateLocationValue(1, e, index)} remove={() => this.removeLocation(1, index)} />
           })}
           
           <View style={styles.button}>
