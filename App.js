@@ -1,10 +1,28 @@
-import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, ImageBackground } from 'react-native';
+import React, { Component } from 'react';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { createAppContainer, createStackNavigator } from "react-navigation";
 import { Asset, Font, Icon } from 'expo';
 import { HomeScreen } from './screens/HomeScreen';
+import { FilterScreen } from './screens/FilterScreen'
 import Colors from './constants/Colors';
 
-export default class App extends React.Component {
+const AppNavigator = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Filters: FilterScreen
+  },
+  {
+    initialRouteName: 'Home',
+    defaultNavigationOptions: {
+      headerTransparent: true,
+      headerLeft: null
+    }
+  }
+)
+
+const AppContainer = createAppContainer(AppNavigator)
+
+export default class App extends Component {
   state = {
     isLoadingComplete: false,
   };
@@ -12,20 +30,16 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ImageBackground style={styles.image} source={require('./assets/images/job-picker-background-main.png')}>
-          <StatusBar barStyle="light-content" backgroundColor={Colors.statusBarColor} />
-          <HomeScreen />   
-        </ImageBackground> 
+        <AppContainer />
       </View>
-    );
-  }
+     
+  )}
 
 
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
-        require('./assets/images/robot-dev.png'),
-        require('./assets/images/robot-prod.png'),
+        require('./assets/images/job-picker-background-main.png')
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar
@@ -52,10 +66,4 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS == "ios" ? 0 : StatusBar.currentHeight,
     fontFamily: 'Roboto'
   },
-  image: {
-    flex: 1,
-    width: null,
-    height: null,
-    resizeMode: 'cover'
-  }
 });
