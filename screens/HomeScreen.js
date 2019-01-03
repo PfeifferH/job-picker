@@ -33,6 +33,8 @@ export class HomeScreen extends Component {
     if (this.state.locations.length < 1 || this.state.locations.indexOf('') !== -1) {
       Alert.alert('Error', 'Please select a valid location', [{text: 'OK'}])
       return
+    } else {
+      this.props.navigation.navigate('Results', this.state)
     }
   }
 

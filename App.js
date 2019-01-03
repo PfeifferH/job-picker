@@ -4,12 +4,13 @@ import { createAppContainer, createStackNavigator } from "react-navigation";
 import { Asset, Font, Icon } from 'expo';
 import { HomeScreen } from './screens/HomeScreen';
 import { FilterScreen } from './screens/FilterScreen'
-import Colors from './constants/Colors';
+import { ResultsScreen } from './screens/ResultsScreen'
 
 const AppNavigator = createStackNavigator(
   {
     Home: HomeScreen,
-    Filters: FilterScreen
+    Filters: FilterScreen,
+    Results: ResultsScreen
   },
   {
     initialRouteName: 'Home',
