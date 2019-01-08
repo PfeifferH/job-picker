@@ -8,14 +8,27 @@ export class ResultsScreen extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      results: getResults(this.props.navigation.state.params)
+      results: {}
     }  
     
+    this.setResults.bind(this)
+  }
+
+  setResults = async () => {
+    results = await getResults(this.props.navigation.state.params)
+    if(results) {
+      this.setState({ results: results })
+    }
+  }
+  
+  componentDidMount() {
+    this.setResults()
   }
 
   render() {
+    console.log(this.state.results)
     return (
-      <Text>{this.state.results}</Text>
+      <Text></Text>
     )
   }
 }
