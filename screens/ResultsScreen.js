@@ -8,7 +8,8 @@ export class ResultsScreen extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      results: {}
+      results: {},
+      currentJob: {}
     }  
     
     this.setResults.bind(this)
@@ -17,6 +18,10 @@ export class ResultsScreen extends Component {
   setResults = async () => {
     results = await getResults(this.props.navigation.state.params)
     if(results) {
+      for(i in results) {
+        if(i == 0) this.setState({ currentJob: results[i] })
+        break
+      }
       this.setState({ results: results })
     }
   }
@@ -26,7 +31,6 @@ export class ResultsScreen extends Component {
   }
 
   render() {
-    console.log(this.state.results)
     return (
       <Text></Text>
     )
