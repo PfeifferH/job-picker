@@ -44,7 +44,8 @@ export class ResultsScreen extends Component {
               return <ResultsDisplay key={result.decoratedJobPosting.jobPosting.id} result={result} />
             })
           }
-        </ScrollView>
+          <View style={styles.header}></View>
+        </ScrollView>       
       </View>
     )
   }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableHighlight, Linking, StyleSheet, Image } from 'react-native'
 import Colors from '../constants/Colors'
-import { getResults } from '../Scraper'
 
 export class ResultsDisplay extends Component {
 
@@ -12,17 +11,22 @@ export class ResultsDisplay extends Component {
 
   render() {
     const result = this.props.result
-    console.log(result.viewJobCanonicalUrl)
     const title = result.decoratedJobPosting.jobPosting.title
-    const imageLink = result.decoratedJobPosting.decoratedCompany.companyLogo !== undefined ? result.decoratedJobPosting.decoratedCompany.companyLogo.link : ''
+    const company = result.decoratedJobPosting.decoratedCompany !== undefined ? result.decoratedJobPosting.decoratedCompany.canonicalName : 'Anonymous'
+    const location = result.decoratedJobPosting.cityState
+    const imageLink = result.decoratedJobPosting.decoratedCompany !== undefined && result.decoratedJobPosting.decoratedCompany.companyLogo !== undefined ? result.decoratedJobPosting.decoratedCompany.companyLogo.link : ''
     return (
-      <TouchableHighlight onPress={() => { Linking.openURL(result.viewJobCanonicalUrl) }}>
+      <TouchableHighlight style={styles.touch} activeOpacity={0.5} underlayColor={Colors.buttonHighlight} onPress={() => { Linking.openURL(result.viewJobCanonicalUrl) }}>
         <View style={styles.container}>
           { imageLink
             ? <Image style={styles.image} source={{ uri: imageLink }} />
-            : null
+            : <Image style={styles.image} source={{ uri: "https://www.linkedin.com/scds/common/u/images/themes/katy/ghosts/company/ghost_company_80x80_v1.png" }} />
           }
-          <Text>{title}</Text>
+          <View style={styles.cardText}>
+            <Text style={[styles.text, { fontWeight: 'bold'}]}>{title}</Text>
+            <Text style={styles.text}>{company}</Text>
+            <Text style={styles.text}>{location}</Text>
+          </View>
         </View>
       </TouchableHighlight> 
     )
@@ -31,12 +35,30 @@ export class ResultsDisplay extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 125,
-    alignSelf: 'stretch',
-    flexDirection: 'row'
+    height: 150,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#E0E0E0'
   },
   image: {
     width: 100,
-    height: 100
+    height: 100,
+    borderRadius: 10
+  },
+  cardText: {
+    flexDirection: 'column',
+    paddingLeft: 25,
+    flex: 1
+  },
+  text: {
+    flex: 1,
+    flexWrap: 'wrap'
+  },
+  touch: {
+    borderRadius: 10,
+    width: "95%",
+    alignSelf: 'center',
+    paddingBottom: 20
   }
 })
