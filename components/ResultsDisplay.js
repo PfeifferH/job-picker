@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#E0E0E0'
+    backgroundColor: '#E0E0E07F',
   },
   image: {
     width: 100,

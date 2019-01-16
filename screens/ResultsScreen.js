@@ -34,7 +34,7 @@ export class ResultsScreen extends Component {
   render() {
     console.log(this.state.results.length)
     return (
-      <View>
+      <ImageBackground style={styles.image} source={require('../assets/images/job-picker-background-results.png')}>
         <View style={styles.header}>
           <Text style={styles.title}>Search Results</Text>
         </View>
@@ -44,25 +44,30 @@ export class ResultsScreen extends Component {
               return <ResultsDisplay key={result.decoratedJobPosting.jobPosting.id} result={result} />
             })
           }
-          <View style={styles.header}></View>
         </ScrollView>       
-      </View>
+      </ImageBackground>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  image: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'cover'
+  },
   header: {
     height: 60,
     backgroundColor: '#fff',
     flexDirection: 'column',
     justifyContent: 'space-around',
-    marginBottom: 30,
   },
   title: {
     fontSize: 25,    
   },
   list: {
     flexDirection: 'column',
+    paddingTop: 30
   }
 })
